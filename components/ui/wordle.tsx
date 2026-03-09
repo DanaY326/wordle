@@ -18,7 +18,7 @@ export function Wordle() {
 
     const [rows, setRows] = useState(new Array(NUM_ROWS).fill(""));
     const [inputRow, setInputRow] = useState(0);
-    const [gameOver, setGameOver] = useState(false);
+    const [gameStatus, setGameStatus] = useState('');
     const [pressedKey, setPressedKey] = useState('');
     const blankColoredKeys = keyboardkeys[0].concat(keyboardkeys[1].concat(keyboardkeys[2]));
     const coloredKeys = useRef(blankColoredKeys);
@@ -31,15 +31,15 @@ export function Wordle() {
         possibleRandomWords[Math.floor(Math.random() * possibleRandomWords.length)] 
     );
     const [charList, setCharList] = useState(secretWordRef.current.split(""));
-
-    const openModal = () => {
+    const openModal = (message: string) => {
         setTimeout(() => {
-            setGameOver(true);
+            setGameStatus(message);
         }, 200)
     }
 
     const handleGuess = async (guess: string) => {
         if (guess.length === 5) {
+            // console.log(secretWordRef.current);
             try { 
                 const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${guess}`);
                 const json = await response.json();
@@ -68,16 +68,12 @@ export function Wordle() {
             })
             setFlipper(1 - flipper);
             if (guess === secretWordRef.current) {
-                openModal();
+                openModal('You won!');
+            } else if (rowsTemp[NUM_ROWS - 1]) {
+                openModal('Game over!');
             }
         }
     }
-
-    useEffect(() => {
-        if (inputRow === NUM_ROWS) {
-            openModal();
-        }
-    }, [inputRow])
 
     const reset = () => {
         const secretWordNew = generate({ minLength: 5, maxLength: 5});
@@ -93,11 +89,11 @@ export function Wordle() {
 
     return (
         <View style={{gap: 10}} key={rows[0].length}>
-            <Modal transparent={true} visible={gameOver} animationType='slide'>
+            <Modal transparent={true} visible={!!gameStatus} animationType='slide'>
                 <ThemedView style={{marginTop: 50, padding: 30, flex: 1}}>
-                    <ThemedText>Game Over!</ThemedText>
+                    <ThemedText>{gameStatus}</ThemedText>
                     <ThemedText>Word: {secretWordRef.current}</ThemedText>
-                    <Button title={"Play again"} onPress={() => {setGameOver(false); reset()}}/>
+                    <Button title={"Play again"} onPress={() => {setGameStatus(''); reset()}}/>
                 </ThemedView>
             </Modal>
             <Button title={"Reset"} onPress={reset}/>
