@@ -21,7 +21,7 @@ export function Wordle() {
     const [gameStatus, setGameStatus] = useState('');
     const [pressedKey, setPressedKey] = useState('');
     const blankColoredKeys = keyboardkeys[0].concat(keyboardkeys[1].concat(keyboardkeys[2]));
-    const coloredKeys = useRef(blankColoredKeys);
+    const coloredKeys = useRef(new Array(blankColoredKeys.length).fill(''));
     const [flipper, setFlipper] = useState(0);
 
     const secretWord = generate({ minLength: 5, maxLength: 5});
@@ -61,11 +61,11 @@ export function Wordle() {
                 } else if (charList.includes(letter)) {
                     const idx = blankColoredKeys.findIndex((key) => letter === key);
                     if (coloredKeys.current[idx] != 'green') {
-                        coloredKeys.current[idx] = 'yellow';
+                        coloredKeys.current[idx] = 'goldenrod';
                     }
                 } else {
                     const idx = blankColoredKeys.findIndex((key) => letter === key);
-                    if (coloredKeys.current[idx] != 'green' && coloredKeys.current[idx] != 'yellow') {
+                    if (coloredKeys.current[idx] != 'green' && coloredKeys.current[idx] != 'goldenrod') {
                         coloredKeys.current[idx] = 'gray';
                     }
                 }
@@ -112,14 +112,14 @@ export function Wordle() {
                 </ThemedView>
             </Modal>
             <View style={styles.grid}>
-            <Button title={"Reset"} onPress={reset}/>
-            {rows.map((word, index) => {
-                return (
-                    index === inputRow ?
-                    <WordleInputRow submitInput={handleGuess} key={index} pressedKey={pressedKey} setPressedKey={setPressedKey}/> :
-                    <WordleRow input={word} secretWordChars={charList} key={index}/>
-                )
-            })}
+                <Button title={"Reset"} onPress={reset}/>
+                {rows.map((word, index) => {
+                    return (
+                        index === inputRow ?
+                        <WordleInputRow submitInput={handleGuess} key={index} pressedKey={pressedKey} setPressedKey={setPressedKey}/> :
+                        <WordleRow input={word} secretWordChars={charList} key={index}/>
+                    )
+                })}
             </View>
             <Keyboard key={flipper} setPressedKey={setPressedKey} coloredKeys={coloredKeys.current}/>
         </View>

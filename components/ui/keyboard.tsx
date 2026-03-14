@@ -29,6 +29,7 @@ export function Keyboard({
             return (
                 <View style={styles.keyboardRow} key={row[0]}>
                     {row.map((key, j) => {
+                        const colorIdx = coloredKeys[getFlatIdx(i, j)];
                         return (
                             <Pressable 
                                 key={j} 
@@ -37,8 +38,8 @@ export function Keyboard({
                                 }}
                             >
                                 <View style={[styles.key, {
-                                        backgroundColor: coloredKeys[getFlatIdx(i, j)]}]}>
-                                    <Text style={{color: textColor}}>{key}
+                                        backgroundColor: colorIdx}]}>
+                                    <Text style={{color: colorIdx !== '' ? 'white' : textColor}}>{key}
                                     </Text>
                                 </View>
                             </Pressable>

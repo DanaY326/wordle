@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { useState, useEffect } from 'react';
 import { ThemedView } from '@/components/themed-view';
-import { useThemeColor } from '@/hooks/use-theme-color';
 
 export function WordleRow({
     input,
@@ -12,7 +11,6 @@ export function WordleRow({
 }) {
 
     const [charList, setCharList] = useState(input.split(""));
-    const textColor = useThemeColor({}, 'text');
     useEffect(() => {
         if (charList.length !== 5) {
             setCharList(new Array(5).fill(' '));
@@ -28,13 +26,13 @@ export function WordleRow({
                                 backgroundColor: 
                                     letter === ' ' ? 'none' :
                                     letter == secretWordChars[index] ? 'green' : 
-                                    secretWordChars.includes(letter) ? 'yellow' : 
+                                    secretWordChars.includes(letter) ? 'goldenrod' : 
                                     'gray'
                             }]
                         } 
                         key={index}
                     >
-                        <Text style={{fontSize: 30, color: textColor}}>{letter}</Text>
+                        <Text style={{fontSize: 30, color: 'white'}}>{letter}</Text>
                     </ThemedView>
                 )
             })}
