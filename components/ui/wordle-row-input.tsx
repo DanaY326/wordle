@@ -64,19 +64,18 @@ export function WordleInputRow({
                         {index === openBox ? 
                             <TextInput 
                                 autoFocus={Platform.OS !== "ios" && Platform.OS !== "android"} 
-                                style={{fontSize: 30, height: 30, width: 30}} 
+                                style={{fontSize: 30, height: 60, width: 30}} 
                                 onChangeText={onChangeText} 
                                 onKeyPress={handleDelete}
                             /> :
-                            <Text style={{fontSize: 30, height: 30, color: textColor}}>
+                            <Text style={{fontSize: 30, color: textColor}}>
                                 {letter}
                             </Text>
                         }
                     </ThemedView>
                 )
             })}
-            {openBox === 5 && 
-            <TextInput 
+            {openBox === 5 && <TextInput 
                 key={5} 
                 autoFocus={Platform.OS !== "ios" && Platform.OS !== "android"} 
                 style={{fontSize: 30, height: 0, width: 0}} 

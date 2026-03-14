@@ -56,14 +56,18 @@ export function Wordle() {
             setInputRow(inputRow + 1);
             guess.split("").forEach((letter, index) => {
                 if (letter === charList[index]) {
-                    const idx = coloredKeys.current.findIndex((key) => letter === key);
+                    const idx = blankColoredKeys.findIndex((key) => letter === key);
                     coloredKeys.current[idx] = 'green';
                 } else if (charList.includes(letter)) {
-                    const idx = coloredKeys.current.findIndex((key) => letter === key);
-                    coloredKeys.current[idx] = 'yellow';
+                    const idx = blankColoredKeys.findIndex((key) => letter === key);
+                    if (coloredKeys.current[idx] != 'green') {
+                        coloredKeys.current[idx] = 'yellow';
+                    }
                 } else {
-                    const idx = coloredKeys.current.findIndex((key) => letter === key);
-                    coloredKeys.current[idx] = 'gray';
+                    const idx = blankColoredKeys.findIndex((key) => letter === key);
+                    if (coloredKeys.current[idx] != 'green' && coloredKeys.current[idx] != 'yellow') {
+                        coloredKeys.current[idx] = 'gray';
+                    }
                 }
             })
             setFlipper(1 - flipper);
@@ -87,8 +91,19 @@ export function Wordle() {
         coloredKeys.current = blankColoredKeys;
     }
 
+    const getWordVal = (word: string) => {
+        let val = 0;
+        let multiplier = 1;
+        const aCharCode = 'A'.charCodeAt(0);
+        for (let i = word.length - 1; i >= 0; --i) {
+            val += (word[i].charCodeAt(0) - aCharCode) * multiplier;
+            multiplier *= 10;
+        }
+        return val;
+    }
+
     return (
-        <View style={{gap: 10}} key={rows[0].length}>
+        <View style={{gap: 10}} key={getWordVal(secretWordRef.current)}>
             <Modal transparent={true} visible={!!gameStatus} animationType='slide'>
                 <ThemedView style={{marginTop: 50, padding: 30, flex: 1}}>
                     <ThemedText>{gameStatus}</ThemedText>
