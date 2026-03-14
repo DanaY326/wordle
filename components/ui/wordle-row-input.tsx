@@ -53,32 +53,34 @@ export function WordleInputRow({
         } 
     }, [pressedKey])
     return (
-        <View style={styles.row}>
-            {charList.map((letter, index) => {
-                return (
-                    <ThemedView style={
-                            [styles.box, {backgroundColor: 'none'}]
-                        } 
-                        key={index}
-                    >
-                        {index === openBox ? 
-                            <TextInput 
-                                autoFocus={Platform.OS !== "ios" && Platform.OS !== "android"} 
-                                style={{fontSize: 30, height: 60, width: 30}} 
-                                onChangeText={onChangeText} 
-                                onKeyPress={handleDelete}
-                            /> :
-                            <Text style={{fontSize: 30, color: textColor}}>
-                                {letter}
-                            </Text>
-                        }
-                    </ThemedView>
-                )
-            })}
+        <View style={styles.rowContainer}>
+            <View style={styles.row}>
+                {charList.map((letter, index) => {
+                    return (
+                        <ThemedView style={
+                                [styles.box, {backgroundColor: 'none'}]
+                            } 
+                            key={index}
+                        >
+                            {index === openBox ? 
+                                <TextInput 
+                                    autoFocus={Platform.OS !== "ios" && Platform.OS !== "android"} 
+                                    style={{fontSize: 30, height: 60, width: 30, outline: 'none'}} 
+                                    onChangeText={onChangeText} 
+                                    onKeyPress={handleDelete}
+                                /> :
+                                <Text style={{fontSize: 30, color: textColor}}>
+                                    {letter}
+                                </Text>
+                            }
+                        </ThemedView>
+                    )
+                })}
+            </View>
             {openBox === 5 && <TextInput 
                 key={5} 
                 autoFocus={Platform.OS !== "ios" && Platform.OS !== "android"} 
-                style={{fontSize: 30, height: 0, width: 0}} 
+                style={styles.dummyInput} 
                 onKeyPress={handleDelete} 
                 onSubmitEditing={() => submitInput(wordSoFar)}
             />}
@@ -99,5 +101,15 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: "row",
         gap: 10,
-    }
+    },
+    rowContainer: {
+        flexDirection: "row",
+        gap: 0
+    },
+    dummyInput: {
+        height: 60, 
+        width: 0, 
+        outline: 'none', 
+        margin: 0, 
+        padding: 0}
 })

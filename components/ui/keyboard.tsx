@@ -24,7 +24,8 @@ export function Keyboard({
         return result + j;
     }
     return (
-        keyboardkeys.map((row, i) => {
+        <View style={styles.container}>
+            {keyboardkeys.map((row, i) => {
             return (
                 <View style={styles.keyboardRow} key={row[0]}>
                     {row.map((key, j) => {
@@ -45,12 +46,16 @@ export function Keyboard({
                     })}
                 </View>
             )
-        })
+        })}
+        </View>
     )
 
 }
 
 const styles = StyleSheet.create({
+    container: {
+        gap: 10
+    },
     keyboardRow: {
         flexDirection: 'row',
         justifyContent: 'center',

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { View, Button, Modal, Alert } from 'react-native';
+import { View, Button, Modal, Alert, StyleSheet } from 'react-native';
 import { WordleRow } from '@/components/ui/wordle-row';
 import { WordleInputRow } from './wordle-row-input';
 import { Keyboard, keyboardkeys } from './keyboard';
@@ -103,14 +103,15 @@ export function Wordle() {
     }
 
     return (
-        <View style={{gap: 10}} key={getWordVal(secretWordRef.current)}>
+        <View style={styles.container} key={getWordVal(secretWordRef.current)}>
             <Modal transparent={true} visible={!!gameStatus} animationType='slide'>
-                <ThemedView style={{marginTop: 50, padding: 30, flex: 1}}>
+                <ThemedView style={styles.gameOverScreen}>
                     <ThemedText>{gameStatus}</ThemedText>
                     <ThemedText>Word: {secretWordRef.current}</ThemedText>
                     <Button title={"Play again"} onPress={() => {setGameStatus(''); reset()}}/>
                 </ThemedView>
             </Modal>
+            <View style={styles.grid}>
             <Button title={"Reset"} onPress={reset}/>
             {rows.map((word, index) => {
                 return (
@@ -119,7 +120,23 @@ export function Wordle() {
                     <WordleRow input={word} secretWordChars={charList} key={index}/>
                 )
             })}
+            </View>
             <Keyboard key={flipper} setPressedKey={setPressedKey} coloredKeys={coloredKeys.current}/>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    gameOverScreen: {
+        marginTop: 50, 
+        padding: 30, 
+        flex: 1
+    }, 
+    container: {
+        gap: 30,
+    }, 
+    grid: {
+        gap: 10,
+        alignItems: "center",
+    }
+})
