@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { View, Button, Modal, Alert, StyleSheet } from 'react-native';
+import { View, Button, Modal, Alert, StyleSheet, Text, Platform } from 'react-native';
 import { WordleRow } from '@/components/ui/wordle-row';
 import { WordleInputRow } from './wordle-row-input';
 import { Keyboard, keyboardkeys } from './keyboard';
@@ -88,7 +88,7 @@ export function Wordle() {
         setRows([]);
         setRows(new Array(NUM_ROWS).fill(""));
         setInputRow(0);
-        coloredKeys.current = blankColoredKeys;
+        coloredKeys.current = new Array(blankColoredKeys.length).fill('');
     }
 
     const getWordVal = (word: string) => {
@@ -113,6 +113,7 @@ export function Wordle() {
             </Modal>
             <View style={styles.grid}>
                 <Button title={"Reset"} onPress={reset}/>
+                <Text style={{height: 5}}>{"\n"}</Text>
                 {rows.map((word, index) => {
                     return (
                         index === inputRow ?
@@ -134,6 +135,7 @@ const styles = StyleSheet.create({
     }, 
     container: {
         gap: 30,
+        marginTop: (Platform.OS === "ios" || Platform.OS === "android") ? 50 : 0,
     }, 
     grid: {
         gap: 10,
