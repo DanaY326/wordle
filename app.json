@@ -1,31 +1,29 @@
 {
   "expo": {
-    "name": "scrap",
-    "slug": "scrap",
+    "name": "Wordo",
+    "slug": "Wordo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "scrap",
+    "icon": "./assets/images/W.png",
+    "scheme": "worldly",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.scrap"
+      "bundleIdentifier": "com.danayuan.wordo"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "foregroundImage": "./assets/images/W.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.scrap"
+      "package": "com.danayuan.wordo"
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/W.png"
     },
     "plugins": [
       "expo-router",
