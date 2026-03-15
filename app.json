@@ -9,14 +9,17 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
+      "icon": "./assets/images/W.png",
       "supportsTablet": true,
       "bundleIdentifier": "com.danayuan.wordo"
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/W.png"
+        "backgroundColor": "#FFFFFF",
+        "foregroundImage": "./assets/images/W-android.png",
+        "backgroundImage": "./assets/images/blank.png"
       },
+      "icon": "./assets/images/W-android.png",
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.danayuan.wordo"
@@ -33,10 +36,7 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff",
-          "dark": {
-            "backgroundColor": "#000000"
-          }
+          "backgroundColor": "#ffffff"
         }
       ]
     ],
