@@ -15,6 +15,7 @@ export function WordleInputRow({
     const [openBox, setOpenBox] = useState(0);
     const [wordSoFar, setWordSoFar] = useState("");
     const [charList, setCharList] = useState(new Array(5).fill(' '));
+    const [flipper, setFlipper] = useState(0);
     const textColor = useThemeColor({}, 'text');
     const onChangeText = (text: string) => {
         if (openBox >= 5) return;
@@ -53,7 +54,7 @@ export function WordleInputRow({
         } 
     }, [pressedKey])
     return (
-        <View style={styles.rowContainer}>
+        <View style={styles.rowContainer} key={flipper}>
             <View style={styles.row}>
                 {charList.map((letter, index) => {
                     return (
@@ -80,9 +81,9 @@ export function WordleInputRow({
             {openBox === 5 && <TextInput 
                 key={5} 
                 autoFocus={Platform.OS !== "ios" && Platform.OS !== "android"} 
-                style={styles.dummyInput} 
+                style={[styles.dummyInput, {outline: 'none'}]} 
                 onKeyPress={handleDelete} 
-                onSubmitEditing={() => submitInput(wordSoFar)}
+                onSubmitEditing={() => {setFlipper(1 - flipper); submitInput(wordSoFar);}}
             />}
         </View>
     );
@@ -109,7 +110,6 @@ const styles = StyleSheet.create({
     dummyInput: {
         height: 60, 
         width: 0, 
-        outline: 'none', 
         margin: 0, 
         padding: 0}
 })

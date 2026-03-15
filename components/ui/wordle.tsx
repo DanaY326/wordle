@@ -43,8 +43,9 @@ export function Wordle() {
             try { 
                 const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${guess}`);
                 const json = await response.json();
-                if (!(json[0] !== undefined && 'word' in json[0])) {
-                    Alert.alert(guess + ' is not a valid word');
+                if (!(json[0] !== undefined && 'word' in json[0]) && guess !== secretWordRef.current) {
+                    const message = guess + ' is not a valid word';
+                    Platform.OS === 'android' || Platform.OS === 'ios' ? Alert.alert(message) : window.confirm(message);
                     return;
                 }
             } catch(e) {
