@@ -66,6 +66,7 @@ export function WordleInputRow({
                             {index === openBox ? 
                                 <TextInput 
                                     autoFocus={Platform.OS !== "ios" && Platform.OS !== "android"} 
+                                    onBlur={(e) => {e.currentTarget.focus()}}
                                     style={{fontSize: 30, height: 60, width: 30, outline: 'none'}} 
                                     onChangeText={onChangeText} 
                                     onKeyPress={handleDelete}
@@ -79,8 +80,8 @@ export function WordleInputRow({
                 })}
             </View>
             {openBox === 5 && <TextInput 
-                key={5} 
                 autoFocus={Platform.OS !== "ios" && Platform.OS !== "android"} 
+                onBlur={(e) => {e.currentTarget.focus()}}
                 style={[styles.dummyInput, {outline: 'none'}]} 
                 onKeyPress={handleDelete} 
                 onSubmitEditing={() => {setFlipper(1 - flipper); submitInput(wordSoFar);}}
