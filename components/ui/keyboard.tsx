@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
 import { useThemeColor } from '@/hooks/use-theme-color';
 

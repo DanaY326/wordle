@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { View, Button, Modal, Alert, StyleSheet, Text, Platform } from 'react-native';
 import { WordleRow } from '@/components/ui/wordle-row';
 import { WordleInputRow } from './wordle-row-input';
