@@ -1,0 +1,38 @@
+name: Build Android Release
+run-name: Building APK release for Android
+on: [push]
+permissions:
+  contents: write
+jobs:
+  Build-APK:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with: 
+          repository: 'DanaY326/wordle'
+      - name: Install Expo
+        run: npm i expo
+      - name: Android Prebuild
+        run: npx expo prebuild --platform android
+      - name: Make gradlew executable
+        working-directory: android
+        run: chmod +x ./gradlew
+      - name: Run gradlew
+        working-directory: android
+        run: ./gradlew assembleRelease
+      - name: Rename Release
+        working-directory: android/app/build/outputs/apk/release
+        run: mv app-release.apk wordo.apk
+      - name: Generate release tag
+        id: generate_release_tag
+        uses: amitsingh-007/next-release-tag@v6.3.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag_prefix: 'v'
+          tag_template: 'yyyy.mm.dd.i'
+      - name: Upload Release
+        working-directory: android/app/build/outputs/apk/release
+        run: gh release upload ${{ steps.generate_release_tag.outputs.next_release_tag }} wordo.apk
+        env: 
+          GITHUB_TOKEN: ${{ github.TOKEN }}
